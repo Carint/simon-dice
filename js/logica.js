@@ -12,8 +12,9 @@ class Juego {
     }
 
     inicializar() {
+        this.elegirColor = this.elegirColor.bind(this)
         btnEmpezar.classList.add('hide')
-        this.nivel = 5
+        this.nivel = 1
         this.colores = { celeste, violeta, naranja, verde }
     }
 
@@ -57,6 +58,17 @@ class Juego {
         this.colores[color].classList.remove('light')
     }
 
+    agregarEventosClick() {
+        // .bind(this) la funcion siempre esta atada al this
+        this.colores.celeste.addEventListener('click', this.elegirColor)
+        this.colores.violeta.addEventListener('click', this.elegirColor)
+        this.colores.naranja.addEventListener('click', this.elegirColor)
+        this.colores.verde.addEventListener('click', this.elegirColor)
+    }
+
+    elegirColor(ev) {
+        console.log(this)
+    }
 }
 
 function empezarJuego() {
