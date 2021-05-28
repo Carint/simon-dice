@@ -3,7 +3,7 @@ const violeta = document.getElementById('violeta')
 const naranja = document.getElementById('naranja')
 const verde = document.getElementById('verde')
 const btnEmpezar = document.getElementById('btnEmpezar')
-const ULTIMO_NIVEL = 10
+const ULTIMO_NIVEL = 1
 
 class Juego {
     constructor() {
@@ -14,9 +14,10 @@ class Juego {
 
     inicializar() {
         // .bind(this) la funcion siempre esta atada al this
+        this.inicializar = this.inicializar.bind(this)
         this.siguienteNivel = this.siguienteNivel.bind(this)
         this.elegirColor = this.elegirColor.bind(this)
-        btnEmpezar.classList.add('hide')
+        btnEmpezar.classList.toggle('hide') // VERIFICA Y QUITA O PONE LA CLASE HIDE
         this.nivel = 1
         this.colores = { celeste, violeta, naranja, verde }
     }
@@ -99,14 +100,27 @@ class Juego {
                 this.nivel++
                 this.eliminarEventosClick()
                 if (this.nivel === (ULTIMO_NIVEL + 1)) {
-                    // TODO Gano!
+                    this.ganoElJuego()
                 } else {
                     setTimeout(this.siguienteNivel, 1500)
                 }
             }
         } else {
-            // TODO Perdio
+            this.perdioElJuego()
         }
+    }
+
+    ganoElJuego() {
+        swal('Platzi', 'Felicidades, ganaste el juego!', 'success')
+            .then(this.inicializar())
+    }
+    
+    perdioElJuego() {
+        swal('Platzi', 'Lo lamentamos, perdiste el juego!', 'error')
+            .then(() => {
+                this.eliminarEventosClick()
+                this.inicializar()
+            })
     }
 }
 
